@@ -90,6 +90,20 @@ describe('/u/[handle] on a ?network= override (#290)', () => {
     );
   });
 
+  it('matches the loaded layout and shows the read-only banner while loading', async () => {
+    m.resolveHandle.mockReturnValue(new Promise(() => {}));
+
+    await act(async () => {
+      root.render(<ProfilePage params={{ handle: 'Umut' }} searchParams={{ network: 'testnet' }} />);
+    });
+
+    expect(q('[role="status"]')?.textContent).toContain('readOnly.stamp');
+    expect(q('.size-\\[140px\\]')).not.toBeNull();
+    expect(container.querySelectorAll('.grid-cols-3 > div')).toHaveLength(3);
+    expect(q('[data-testid="badges"]')).toBeNull();
+    expect(q('[data-testid="vouch-network"]')).toBeNull();
+  });
+
   it('is read-only: a network badge, no vouch link, and links that keep the override', async () => {
     m.profile = { address: G }; // even the signed-in owner gets no write action here
     await render({ network: 'testnet' });

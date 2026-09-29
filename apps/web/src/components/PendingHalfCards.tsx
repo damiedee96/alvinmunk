@@ -15,7 +15,7 @@ import { useLocale, useTranslations } from '@/lib/i18n';
  * hook (your staked Social XP gets slashed if the window closes): re-share the link.
  * Shows a friendly empty state when there's nothing pending.
  */
-export function PendingHalfCards() {
+export function PendingHalfCards({ hideWhenEmpty = false }: { hideWhenEmpty?: boolean }) {
   const t = useTranslations();
   const { locale } = useLocale();
   const numberFormat = new Intl.NumberFormat(locale === 'tr' ? 'tr-TR' : 'en-US');
@@ -50,6 +50,8 @@ export function PendingHalfCards() {
   }
 
   if (items.length === 0) {
+    if (hideWhenEmpty) return null;
+
     return (
       <Frame label={t('pendingHalfCards.frame')} index="00" accent="tertiary" tape="tr">
         <div className="flex flex-col items-center gap-3 px-6 py-8 text-center">

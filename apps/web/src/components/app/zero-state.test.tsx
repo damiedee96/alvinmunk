@@ -99,7 +99,7 @@ describe('first-run UI states', () => {
     expect(container.textContent).toContain('No activity yet');
   });
 
-  it('shows a friendly empty state for pending half-cards when none are waiting', async () => {
+  it('shows a friendly empty state for the pending half-cards when none are waiting', async () => {
     getPendingVouchesMock.mockResolvedValue([]);
 
     await act(async () => {
@@ -108,5 +108,17 @@ describe('first-run UI states', () => {
     });
 
     expect(container.textContent).toContain('No half-cards waiting');
+  });
+
+  it('hides the empty pending frame when the caller opts out', async () => {
+    getPendingVouchesMock.mockResolvedValue([]);
+
+    await act(async () => {
+      root.render(<PendingHalfCards hideWhenEmpty />);
+      await Promise.resolve();
+    });
+
+    expect(container.textContent).not.toContain('No half-cards waiting');
+    expect(container.querySelector('.spotlight')).toBeNull();
   });
 });

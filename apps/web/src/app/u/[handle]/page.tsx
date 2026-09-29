@@ -79,15 +79,31 @@ export default function ProfilePage({
   if (address === undefined) {
     return (
       <div className="container max-w-2xl py-14">
+        {net && <ReadOnlyBanner network={net.network} />}
         <Frame label={`profile // @${handle}`} index="…">
-          <div className="flex items-center gap-6 p-8">
-            <Skeleton className="size-32 rounded-full" />
-            <div className="flex-1 space-y-3">
-              <Skeleton className="h-7 w-40" />
+          <div className="grid gap-6 p-7 sm:grid-cols-[auto_1fr] sm:items-center sm:p-8">
+            <Skeleton className="size-[140px] rounded-full" />
+            <div className="space-y-3">
+              <Skeleton className="h-9 w-40" />
               <Skeleton className="h-4 w-28" />
+              <Skeleton className="h-4 w-full max-w-sm" />
+              <Skeleton className="h-6 w-36" />
             </div>
           </div>
+          <div className="grid grid-cols-3 divide-x divide-border/60 border-t border-border/60">
+            <Field label="VOUCHED_BY" accent="primary" />
+            <Field label="BACKED" accent="tertiary" />
+            <Field label="EARNED_XP" accent="secondary" />
+          </div>
         </Frame>
+        {!net && (
+          <div className="mt-5 min-h-[290px] sm:min-h-[132px]" aria-hidden="true">
+            <Skeleton className="h-full min-h-[290px] rounded-2xl sm:min-h-[132px]" />
+          </div>
+        )}
+        <div className="mt-5 min-h-[250px]" aria-hidden="true">
+          <Skeleton className="h-full min-h-[250px] rounded-2xl" />
+        </div>
       </div>
     );
   }

@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { ArrowDown } from 'lucide-react';
+import Link from 'next/link';
 import { getMyVouches } from '@/lib/myvouches';
 import { useTranslations } from '@/lib/i18n';
 import { getItem, setItem } from '@/lib/storage';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 /**
  * First-run "vouch-first" nudge (roundtable / Kaan): at 0 users the activation moment is
@@ -33,7 +36,9 @@ export function FirstStarNudge() {
       </p>
       <div className="mt-3 flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-secondary">
         <ArrowDown className="size-3.5 motion-safe:animate-bounce" />
-        {t('firstStarNudge.action')}
+        <Link href="/app/vouch" className={cn(buttonVariants({ variant: 'flow', size: 'sm' }), 'font-mono')}>
+          {t('firstStarNudge.action')}
+        </Link>
         <button
           onClick={() => {
             setItem(DISMISS_KEY, '1');
