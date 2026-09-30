@@ -34,7 +34,7 @@ export function FirstStarNudge() {
       <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground text-balance">
         {t('firstStarNudge.body')}
       </p>
-      <div className="mt-3 flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-secondary">
+      <div className="mt-3 flex items-center justify-center gap-2 eyebrow-mono text-secondary">
         {/* The vouch form lives on /app/vouch, not below this card (#475). */}
         <Link href="/app/vouch" className={cn(buttonVariants({ variant: 'flow', size: 'sm' }), 'font-mono')}>
           {t('firstStarNudge.action')}

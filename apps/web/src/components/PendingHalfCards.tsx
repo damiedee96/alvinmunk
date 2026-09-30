@@ -83,7 +83,7 @@ export function PendingHalfCards({ hideWhenEmpty = false }: { hideWhenEmpty?: bo
                   : 'border-tertiary/50 text-tertiary',
               )}
             >
-              <span className="font-mono text-[10px]">
+              <span className="font-mono text-2xs">
                 {v.daysLeft <= 0 ? t('pendingHalfCards.now') : t('pendingHalfCards.days', { count: numberFormat.format(v.daysLeft) })}
               </span>
             </div>
@@ -91,7 +91,7 @@ export function PendingHalfCards({ hideWhenEmpty = false }: { hideWhenEmpty?: bo
               <p className="truncate text-sm italic text-foreground/85">&ldquo;{v.note}&rdquo;</p>
               <p
                 className={cn(
-                  'font-mono text-[10px] uppercase tracking-wider',
+                  'font-mono text-2xs uppercase tracking-wider',
                   v.daysLeft <= 1 ? 'text-destructive' : 'text-muted-foreground',
                 )}
               >
