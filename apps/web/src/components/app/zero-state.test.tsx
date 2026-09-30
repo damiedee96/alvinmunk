@@ -121,4 +121,28 @@ describe('first-run UI states', () => {
     expect(container.textContent).not.toContain('No half-cards waiting');
     expect(container.querySelector('.spotlight')).toBeNull();
   });
+
+  it('shows no loading frame either when the caller opts out (it may never appear)', async () => {
+    getPendingVouchesMock.mockReturnValue(new Promise(() => {}));
+
+    await act(async () => {
+      root.render(<PendingHalfCards hideWhenEmpty />);
+    });
+
+    expect(container.innerHTML).toBe('');
+  });
+
+  it('still lists waiting half-cards when the caller opts out of the empty state', async () => {
+    getPendingVouchesMock.mockResolvedValue([
+      { id: 7, note: 'for the soup', created: 1, claimUrl: 'https://x/claim/7', daysLeft: 3 },
+    ]);
+
+    await act(async () => {
+      root.render(<PendingHalfCards hideWhenEmpty />);
+      await Promise.resolve();
+    });
+
+    expect(container.textContent).toContain('for the soup');
+    expect(container.textContent).toContain('pending // awaiting_claim');
+  });
 });

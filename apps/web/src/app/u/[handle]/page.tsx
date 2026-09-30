@@ -77,17 +77,28 @@ export default function ProfilePage({
   const bio = (isMe ? profile?.bio : undefined) ?? meta?.bio;
 
   if (address === undefined) {
+    // The loaded layout below with every value still reading (#476): the same grid, a 140px
+    // face, name / address / stamp lines at their real heights and the stat cells. The badge,
+    // network and action sections are held at the heights they first render with (the
+    // BadgeGallery and VouchNetwork loading states; keep these in step with them), so nothing
+    // jumps when the handle resolves.
     return (
-      <div className="container max-w-2xl py-14">
+      <div className="container max-w-2xl py-14" aria-busy="true">
         {net && <ReadOnlyBanner network={net.network} />}
         <Frame label={`profile // @${handle}`} index="…">
           <div className="grid gap-6 p-7 sm:grid-cols-[auto_1fr] sm:items-center sm:p-8">
             <Skeleton className="size-[140px] rounded-full" />
-            <div className="space-y-3">
+            <div>
               <Skeleton className="h-9 w-40" />
-              <Skeleton className="h-4 w-28" />
-              <Skeleton className="h-4 w-full max-w-sm" />
-              <Skeleton className="h-6 w-36" />
+              <Skeleton className="mt-1 h-4 w-28" />
+              <div className="mt-3">
+                {/* An invisible stamp keeps that line's exact height. */}
+                <Skeleton className="inline-block">
+                  <Stamp accent="secondary" className="invisible">
+                    ✦ LIT ON STELLAR
+                  </Stamp>
+                </Skeleton>
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-3 divide-x divide-border/60 border-t border-border/60">
@@ -96,14 +107,9 @@ export default function ProfilePage({
             <Field label="EARNED_XP" accent="secondary" />
           </div>
         </Frame>
-        {!net && (
-          <div className="mt-5 min-h-[290px] sm:min-h-[132px]" aria-hidden="true">
-            <Skeleton className="h-full min-h-[290px] rounded-2xl sm:min-h-[132px]" />
-          </div>
-        )}
-        <div className="mt-5 min-h-[250px]" aria-hidden="true">
-          <Skeleton className="h-full min-h-[250px] rounded-2xl" />
-        </div>
+        {!net && <Skeleton data-testid="badges-placeholder" className="mt-5 h-[242px] rounded-none sm:h-[150px]" />}
+        <Skeleton data-testid="network-placeholder" className="mt-5 h-[291px] rounded-none sm:h-[275px]" />
+        <div className="mt-5 h-[92px] sm:h-11" />
       </div>
     );
   }
@@ -220,7 +226,8 @@ function Field({
     <div className="p-5">
       <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{label}</p>
       {value === undefined ? (
-        <Skeleton className="mt-2 h-8 w-12" />
+        // h-9 = text-3xl's line height, so the cell keeps its height when the number lands.
+        <Skeleton className="mt-2 h-9 w-12" />
       ) : (
         <p className={cn('mt-2 font-display text-3xl font-semibold', c)}>{value}</p>
       )}

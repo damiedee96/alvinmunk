@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ArrowDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { getMyVouches } from '@/lib/myvouches';
 import { useTranslations } from '@/lib/i18n';
@@ -35,9 +35,10 @@ export function FirstStarNudge() {
         {t('firstStarNudge.body')}
       </p>
       <div className="mt-3 flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-secondary">
-        <ArrowDown className="size-3.5 motion-safe:animate-bounce" />
+        {/* The vouch form lives on /app/vouch, not below this card (#475). */}
         <Link href="/app/vouch" className={cn(buttonVariants({ variant: 'flow', size: 'sm' }), 'font-mono')}>
           {t('firstStarNudge.action')}
+          <ArrowRight aria-hidden />
         </Link>
         <button
           onClick={() => {

@@ -13,7 +13,8 @@ import { useLocale, useTranslations } from '@/lib/i18n';
 /**
  * Pending half-cards — vouches you minted that NOBODY claimed yet. The re-engagement
  * hook (your staked Social XP gets slashed if the window closes): re-share the link.
- * Shows a friendly empty state when there's nothing pending.
+ * Shows a friendly empty state when there's nothing pending; with `hideWhenEmpty` (the /app
+ * home) it renders nothing while loading or when nothing is pending instead.
  */
 export function PendingHalfCards({ hideWhenEmpty = false }: { hideWhenEmpty?: boolean }) {
   const t = useTranslations();
@@ -39,6 +40,7 @@ export function PendingHalfCards({ hideWhenEmpty = false }: { hideWhenEmpty?: bo
   }
 
   if (items === null) {
+    if (hideWhenEmpty) return null;
     return (
       <Frame label={t('pendingHalfCards.frame')} index="00" accent="tertiary" tape="tr">
         <div className="space-y-2 p-4">
@@ -51,7 +53,6 @@ export function PendingHalfCards({ hideWhenEmpty = false }: { hideWhenEmpty?: bo
 
   if (items.length === 0) {
     if (hideWhenEmpty) return null;
-
     return (
       <Frame label={t('pendingHalfCards.frame')} index="00" accent="tertiary" tape="tr">
         <div className="flex flex-col items-center gap-3 px-6 py-8 text-center">
