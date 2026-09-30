@@ -107,8 +107,8 @@ export default function ProfilePage({
             <Field label="EARNED_XP" accent="secondary" />
           </div>
         </Frame>
-        {!net && <Skeleton data-testid="badges-placeholder" className="mt-5 h-[242px] rounded-none sm:h-[150px]" />}
-        <Skeleton data-testid="network-placeholder" className="mt-5 h-[291px] rounded-none sm:h-[275px]" />
+        {!net && <Skeleton data-testid="badges-placeholder" className="mt-5 h-[238px] rounded-none sm:h-[146px]" />}
+        <Skeleton data-testid="network-placeholder" className="mt-5 h-[278px] rounded-none sm:h-[262px]" />
         <div className="mt-5 h-[92px] sm:h-11" />
       </div>
     );
